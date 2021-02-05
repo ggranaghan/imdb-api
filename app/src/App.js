@@ -4,35 +4,48 @@ import axios from 'axios';
 import react, {useState} from 'react';
 function App() {
 
+  const [movieObj, setMovieObj] = useState([]);
   const [currentMovie, setMovie] = useState('Your movie suggest will appear here');
   const [movieImgUrl, setMovieImgUrl] = useState('');
   const [movieDirector, setMovieDirector] = useState('');
   const [movieRating, setMovieRating] = useState('');
+  const [resStatus, setResStatus] = useState(false);
+
 
   const randomNum = Math.floor(Math.random() * 249) + 1;
+  console.log(randomNum)
 
   const handleClick = () => {
+    if (!resStatus){
     axios.get('/movie').then(response => {
+      setMovieObj(response.data.items);
       setMovie(response.data.items[randomNum].fullTitle);
       setMovieImgUrl(response.data.items[randomNum].image);
       setMovieDirector(response.data.items[randomNum].crew);
-      setMovieRating(response.data.items[randomNum].imDbRating);
+      setMovieRating(`Rating: ${response.data.items[randomNum].imDbRating}`);
+      setResStatus(true);
     })
+   } else {
+    setMovie(movieObj[randomNum].fullTitle);
+    setMovieImgUrl(movieObj[randomNum].image);
+    setMovieDirector(movieObj[randomNum].crew);
+    setMovieRating(`Rating: ${movieObj[randomNum].imDbRating}`);
+   }
   }
 
   return (
-    <div class="container">
-      <div class="head">
+    <div className="container">
+      <div className="head">
           <h1>
              Click below to generate a movie suggestion
           </h1>
       </div>
-      <div class="movie">
+      <div className="movie">
           <button onClick={handleClick}>click me</button>
-          <p class="api-title">{currentMovie}</p>
-          <img width="200px" class="api-image" src={movieImgUrl}/>
-          <p class="api-director">{movieDirector}</p>
-          <p class="api-rating">Rating: {movieRating}</p>
+          <p className="api-title">{currentMovie}</p>
+          <img className="api-image" width="200px" src={movieImgUrl}/>
+          <p className="api-director">{movieDirector}</p>
+          <p className="api-rating">{movieRating}</p>
       </div>
   </div>
   );
