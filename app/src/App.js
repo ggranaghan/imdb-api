@@ -1,7 +1,16 @@
 
 import './App.css';
 import axios from 'axios';
-import react, {useState} from 'react';
+import react, {useState, useEffect} from 'react';
+
+//populates nuMArray with 1-250, every time handleClick() random number in the array becomes randomNum and is removed from numArray
+let randomNum;
+let numArray = [];
+let usedArray = [];
+for (let i = 1; i <= 250; i++) {
+  numArray.push(i)
+}
+
 function App() {
 
   const [movieObj, setMovieObj] = useState([]);
@@ -11,11 +20,16 @@ function App() {
   const [movieRating, setMovieRating] = useState('');
   const [resStatus, setResStatus] = useState(false);
 
-
-  const randomNum = Math.floor(Math.random() * 249) + 1;
-  console.log(randomNum)
-
   const handleClick = () => {
+
+    if (numArray.length) {
+      function pickNum() {
+        randomNum = (numArray[Math.floor(Math.random() * numArray.length) + 1]);
+        let remover = numArray.splice(numArray.indexOf(randomNum), 1);
+        usedArray.push(remover)
+      }
+      pickNum()
+    } 
     if (!resStatus){
     axios.get('/movie').then(response => {
       setMovieObj(response.data.items);
