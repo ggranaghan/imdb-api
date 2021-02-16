@@ -10,10 +10,22 @@ body {
   gap: 20px;
 } 
 
-.head {
-}
-
 .movie {
   justify-self: center;
   text-align: center;
 }
+
+#button {
+  padding:0.35em 1.2em;
+  width: 250px;
+  height: 50px;
+  border:0.1em solid #FFFFFF;
+  text-decoration:none;
+  color:#000;
+  text-align:center;
+  transition: all 0.2s;
+}
+#button:hover{
+  border-radius: 5px;
+  opacity: 80%;
+  }

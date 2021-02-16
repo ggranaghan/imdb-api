@@ -55,8 +55,8 @@ function App() {
           </h1>
       </div>
       <div className="movie">
-          <button onClick={handleClick}>click me</button>
-          <p className="api-title">{currentMovie}</p>
+          <button id="button" onClick={handleClick}>click me</button>
+          <h2 className="api-title">{currentMovie}</h2>
           <img className="api-image" width="200px" src={movieImgUrl}/>
           <p className="api-director">{movieDirector}</p>
           <p className="api-rating">{movieRating}</p>
